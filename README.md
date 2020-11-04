@@ -28,7 +28,7 @@ yarn build
 
 ## Setup
 
-Go to your model, for example if you have a content type `Article` it will be `/api/article/models/article.settings.json` and paste the field in the `attributes` section.
+Go to your model and add the `oembed` field. For example if you have a content type `Article` it will be in `/api/article/models/article.settings.json` and paste the field in the `attributes` section.
 
 e.g
 
@@ -50,7 +50,7 @@ e.g
 
 Now you'll have the oembed field when you create a new article.
 
-## Example of data fetched
+## Example of the data fetched
 
 If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal, this data will be stored:
 
@@ -78,7 +78,7 @@ If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal,
 }
 ```
 
-_Note:_ because of how the field API is working at the moment, the data returned from your endpoint will be a string and not a JSON object. You'll just have to parse the data in your front (`JSON.parse(article.oembed)`).
+**Note:** because of how the field API is working at the moment, the data returned from your endpoint will be a string and not a JSON object. You'll just have to parse the data in your front (`JSON.parse(article.oembed)`).
 
 ## Supported third party sites
 
