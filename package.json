@@ -1,0 +1,41 @@
+{
+  "name": "strapi-plugin-oembed",
+  "version": "0.1.0",
+  "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi",
+  "strapi": {
+    "name": "oEmbed",
+    "icon": "globe-asia",
+    "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi"
+  },
+  "dependencies": {
+    "@buffetjs/core": "^3.3.1",
+    "@buffetjs/custom": "^3.3.1",
+    "axios": "^0.21.0",
+    "lodash": "^4.17.20",
+    "prop-types": "^15.7.2",
+    "react": "16.13.1",
+    "react-intl": "^5.8.8",
+    "react-router-dom": "^5.2.0",
+    "strapi-helper-plugin": "^3.2.5"
+  },
+  "author": {
+    "name": "Nicolas Hamelin",
+    "url": "https://nicolashamelin.fr"
+  },
+  "homepage": "https://github.com/nicolashmln/strapi-plugin-oembed",
+  "keywords": [
+    "strapi",
+    "plugin",
+    "oembed",
+    "embed",
+    "media",
+    "youtube",
+    "vimeo",
+    "soundcloud"
+  ],
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

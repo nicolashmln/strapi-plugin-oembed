@@ -1,0 +1,9 @@
+{
+  "form.button.import": "Import media embed",
+  "form.button.edit": "Edit",
+  "form.button.delete": "Delete",
+  "modal.import.title": "Import media embed",
+  "modal.import.input.label": "URL",
+  "modal.import.input.description": "Youtube, Vimeo or Soundcloud",
+  "modal.import.button.import": "Import"
+}
