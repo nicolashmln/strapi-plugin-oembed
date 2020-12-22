@@ -23,21 +23,21 @@ module.exports = {
         switch (matches[3]) {
           case 'youtu.be':
           case 'youtube.com':
-            fetchedData = await axios.get(`http://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
+            fetchedData = await axios.get(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
             title = fetchedData.title;
             mime = 'video/youtube';
             thumbnail = fetchedData.thumbnail_url;
             break;
           
           case 'soundcloud.com':
-            fetchedData = await axios.get(`http://www.soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
+            fetchedData = await axios.get(`https://www.soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
             title = fetchedData.title;
             mime = 'audio/soundcloud';
             thumbnail = fetchedData.thumbnail_url;
             break;
           
           case 'vimeo.com':
-            fetchedData = await axios.get(`http://vimeo.com/api/oembed.json?url=${encodeURIComponent(url)}`).then(res => res.data);
+            fetchedData = await axios.get(`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(url)}`).then(res => res.data);
             title = fetchedData.title;
             mime = 'video/vimeo';
             thumbnail = fetchedData.thumbnail_url;
