@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
+import { isEmpty, isObject } from 'lodash';
 import { Button } from '@buffetjs/core';
 import { Label, InputDescription, InputErrors } from 'strapi-helper-plugin';
 import { FormattedMessage } from 'react-intl';
@@ -17,20 +17,25 @@ const OEmbedField = ({
   value,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  let draftValue, setDraftValue;
 
-  try {
-    const parsedValue = JSON.parse(value);
-    if (parsedValue) {
-      [draftValue, setDraftValue] = useState(parsedValue);
-    } else {
-      [draftValue, setDraftValue] = useState({});
-    }
-  } catch {
-    [draftValue, setDraftValue] = useState({});
-  }
+  // Parse the value from string to JSON
+  const parseValue = (value) => {
+    let parsedValue = null; 
 
-  const hasValue = useMemo(() => draftValue && draftValue.url ? true : false, [draftValue]);
+    try {
+      parsedValue = JSON.parse(value);
+    } catch {}
+
+    return parsedValue;
+  };
+
+  const [draftValue, setDraftValue] = useState(parseValue(value));
+
+  useEffect(() => {
+    setDraftValue(parseValue(value));
+  }, [value])
+
+  const hasValue = useMemo(() => isObject(draftValue) && draftValue.url ? true : false, [draftValue]);
 
   let spacer = !isEmpty(inputDescription) ? <div style={{ height: '.4rem' }} /> : <div />;
 
@@ -43,12 +48,10 @@ const OEmbedField = ({
   };
 
   const onImport = (data) => {
-    setDraftValue(data);
-
     onChange({
       target: {
         name: name,
-        value: JSON.stringify(data),
+        value: isObject(data) ? JSON.stringify(data) : null,
       },
     });
   };
@@ -78,7 +81,7 @@ const OEmbedField = ({
             ) }
           </Button>
           {hasValue && (
-            <Button color="delete" onClick={() => onImport({})} style={{marginLeft: '15px'}}>
+            <Button color="delete" onClick={() => onImport(null)} style={{marginLeft: '15px'}}>
               <FormattedMessage id={`${pluginId}.form.button.delete`} />
             </Button>
           ) }

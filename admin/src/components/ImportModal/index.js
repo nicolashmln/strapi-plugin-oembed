@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { isObject } from 'lodash';
 import {
   HeaderModal,
   HeaderModalTitle,
@@ -53,7 +54,7 @@ const ImportModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      setUrl(value.url ? value.url : '');
+      setUrl(isObject(value) && value.url ? value.url : '');
 
       // Focus on the input
       setTimeout(() => {
