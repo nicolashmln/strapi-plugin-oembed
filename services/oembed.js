@@ -11,7 +11,7 @@ module.exports = {
   async fetch(url) {
     let data;
 
-    const matches = url.match(/^(https?:\/\/)?(www\.)?(youtu\.be|youtube.com|soundcloud\.com|vimeo\.com)/i);
+    const matches = url.match(/^(https?:\/\/)?(www\.)?(youtu\.be|youtube.com|soundcloud\.com|vimeo\.com|tiktok\.com)/i);
 
     if (matches) {
       try {
@@ -40,6 +40,13 @@ module.exports = {
             fetchedData = await axios.get(`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(url)}`).then(res => res.data);
             title = fetchedData.title;
             mime = 'video/vimeo';
+            thumbnail = fetchedData.thumbnail_url;
+            break;
+
+          case 'tiktok.com':
+            fetchedData = await axios.get(`https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
+            title = fetchedData.title;
+            mime = 'video/tiktok';
             thumbnail = fetchedData.thumbnail_url;
             break;
         
