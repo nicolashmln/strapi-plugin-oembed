@@ -7,6 +7,10 @@
     "icon": "globe-asia",
     "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolashmln/strapi-plugin-oembed.git"
+  },
   "dependencies": {
     "@buffetjs/core": "^3.3.4",
     "@buffetjs/custom": "^3.3.4",
