@@ -41,7 +41,7 @@ e.g
     ...
     "oembed": {
       "type": "oembed",
-      "columnType": "longtext"
+      "columnType": "string"
     }
     ...
   }
