@@ -82,7 +82,7 @@ const OEmbedField = ({
           }}
         >
           {hasValue && (
-            <p style={{ marginBottom: "10px" }}>
+            <div style={{ marginBottom: "10px" }}>
               {draftValue.title && (
                 <Box paddingBottom={2}>
                   <Typography variant="delta">{draftValue.title}</Typography>
@@ -91,7 +91,7 @@ const OEmbedField = ({
               <Link href={draftValue.url} target="_blank">
                 {draftValue.url}
               </Link>
-            </p>
+            </div>
           )}
           <div style={{ display: "flex" }}>
             <Button variant="default" onClick={openModal}>
