@@ -1,13 +1,14 @@
-import pluginPkg from '../../package.json';
-import pluginId from './pluginId';
-import App from './containers/App';
-import Initializer from './containers/Initializer';
-import lifecycles from './lifecycles';
-import trads from './translations';
-import OEmbedField from './components/OEmbedField';
+import pluginPkg from "../../package.json";
+import pluginId from "./pluginId";
+import App from "./containers/App";
+import Initializer from "./containers/Initializer";
+import lifecycles from "./lifecycles";
+import trads from "./translations";
+import OEmbedField from "./components/OEmbedField";
 
-export default strapi => {
-  const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
+export default (strapi) => {
+  const pluginDescription =
+    pluginPkg.strapi.description || pluginPkg.description;
 
   const plugin = {
     blockerComponent: null,
@@ -29,7 +30,7 @@ export default strapi => {
     trads,
   };
 
-  strapi.registerField({ type: 'oembed', Component: OEmbedField });
+  strapi.registerField({ type: "oembed", Component: OEmbedField });
 
   return strapi.registerPlugin(plugin);
 };

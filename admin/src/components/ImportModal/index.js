@@ -1,7 +1,6 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { isObject } from 'lodash';
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import { isObject } from "lodash";
 import {
   HeaderModal,
   HeaderModalTitle,
@@ -11,23 +10,18 @@ import {
   ModalForm,
   useGlobalContext,
   request,
-} from 'strapi-helper-plugin';
-import { FormattedMessage } from 'react-intl';
-import { Button } from '@buffetjs/core';
-import { Inputs } from '@buffetjs/custom';
-import { getTrad, getRequestUrl } from '../../utils';
-import pluginId from '../../pluginId';
+} from "@strapi/helper-plugin";
+import { FormattedMessage } from "react-intl";
+import { Button } from "@buffetjs/core";
+import { Inputs } from "@buffetjs/custom";
+import { getTrad, getRequestUrl } from "../../utils";
+import pluginId from "../../pluginId";
 
-const ImportModal = ({
-  isOpen,
-  onToggle,
-  onImport,
-  value,
-}) => {
+const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
   const { formatMessage } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [inputError, setInputError] = useState('');
-  const [url, setUrl] = useState('');
+  const [inputError, setInputError] = useState("");
+  const [url, setUrl] = useState("");
   const abortController = new AbortController();
 
   const onSubmit = async () => {
@@ -35,8 +29,13 @@ const ImportModal = ({
     const { signal } = abortController;
 
     try {
-      setInputError('');
-      const data = await request(getRequestUrl(`fetch?url=${encodeURIComponent(url)}`, { method: 'GET', signal }));
+      setInputError("");
+      const data = await request(
+        getRequestUrl(`fetch?url=${encodeURIComponent(url)}`, {
+          method: "GET",
+          signal,
+        })
+      );
       setIsLoading(false);
 
       if (data.error) {
@@ -45,7 +44,6 @@ const ImportModal = ({
         onImport(data);
         onToggle();
       }
-
     } catch (error) {
       setInputError(error.message);
       setIsLoading(false);
@@ -54,11 +52,11 @@ const ImportModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      setUrl(isObject(value) && value.url ? value.url : '');
+      setUrl(isObject(value) && value.url ? value.url : "");
 
       // Focus on the input
       setTimeout(() => {
-        const input = document.getElementById('oembed-form-url');
+        const input = document.getElementById("oembed-form-url");
         if (input) {
           input.focus();
         }
@@ -73,34 +71,34 @@ const ImportModal = ({
 
   // Submit when we hit enter on the input
   const keyPress = (e) => {
-    if (e.keyCode === 13){
+    if (e.keyCode === 13) {
       e.preventDefault();
       onSubmit();
     }
-  }
+  };
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle} style={{ width: '50rem' }}>
+    <Modal isOpen={isOpen} onToggle={onToggle} style={{ width: "50rem" }}>
       <HeaderModal>
         <section>
-          <HeaderModalTitle style={{ textTransform: 'none' }}>
+          <HeaderModalTitle style={{ textTransform: "none" }}>
             <FormattedMessage id={`${pluginId}.modal.import.title`} />
           </HeaderModalTitle>
         </section>
       </HeaderModal>
       <form>
         <ModalBody>
-          <ModalForm style={{ padding: '0 15px' }}>
+          <ModalForm style={{ padding: "0 15px" }}>
             <Inputs
               id="oembed-form-url"
               label={formatMessage({
-                id: getTrad('modal.import.input.label'),
+                id: getTrad("modal.import.input.label"),
               })}
               description={formatMessage({
-                id: getTrad('modal.import.input.description'),
+                id: getTrad("modal.import.input.description"),
               })}
               validations={{
-                required: true
+                required: true,
               }}
               onChange={({ target: { value } }) => {
                 setUrl(value);
@@ -111,7 +109,7 @@ const ImportModal = ({
               type="text"
               value={url}
             />
-            </ModalForm>
+          </ModalForm>
         </ModalBody>
         <ModalFooter>
           <section>
