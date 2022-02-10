@@ -16,7 +16,7 @@
     "react": "16.13.1",
     "react-intl": "^5.8.8",
     "react-router-dom": "^5.2.0",
-    "strapi-helper-plugin": "^3.4.6"
+    "@strapi/helper-plugin": "4.0.7"
   },
   "author": {
     "name": "Nicolas Hamelin",
