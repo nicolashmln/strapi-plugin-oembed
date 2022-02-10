@@ -9,6 +9,9 @@ import {
   FieldError,
 } from "@strapi/design-system/Field";
 import { Stack } from "@strapi/design-system/Stack";
+import { Typography } from "@strapi/design-system/Typography";
+import { Box } from "@strapi/design-system/Box";
+import { Link } from "@strapi/design-system/Link";
 import { FormattedMessage } from "react-intl";
 import ImportModal from "../ImportModal";
 import pluginId from "../../pluginId";
@@ -17,6 +20,7 @@ const OEmbedField = ({
   description,
   error,
   name,
+  intlLabel,
   onChange,
   value,
   required,
@@ -63,30 +67,33 @@ const OEmbedField = ({
   };
 
   return (
-    <Field name="oembed" error={error} hint={description}>
+    <Field
+      name="oembed"
+      error={error}
+      hint={description ? description.defaultMessage : ""}
+    >
       <Stack size={1}>
-        <FieldLabel>{name}</FieldLabel>
+        <FieldLabel>{intlLabel.defaultMessage}</FieldLabel>
         <div
           style={{
-            border: "1px solid #e3e9f3",
+            border: "1px solid #dcdce4",
             padding: "15px",
             borderRadius: "2px",
           }}
         >
           {hasValue && (
-            <p>
+            <p style={{ marginBottom: "10px" }}>
               {draftValue.title && (
-                <>
-                  <span style={{ fontSize: "1.9rem" }}>{draftValue.title}</span>
-                  <br />
-                </>
+                <Box paddingBottom={2}>
+                  <Typography variant="delta">{draftValue.title}</Typography>
+                </Box>
               )}
-              <a href={draftValue.url} target="_blank">
+              <Link href={draftValue.url} target="_blank">
                 {draftValue.url}
-              </a>
+              </Link>
             </p>
           )}
-          <div>
+          <div style={{ display: "flex" }}>
             <Button variant="default" onClick={openModal}>
               {hasValue && (
                 <FormattedMessage id={`${pluginId}.form.button.edit`} />
