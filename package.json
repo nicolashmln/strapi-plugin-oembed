@@ -3,9 +3,11 @@
   "version": "0.4.0",
   "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi",
   "strapi": {
-    "name": "oEmbed",
+    "name": "oembed",
+    "displayName": "oEmbed",
     "icon": "globe-asia",
-    "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi"
+    "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi",
+    "kind": "plugin"
   },
   "dependencies": {
     "@buffetjs/core": "^3.3.4",
