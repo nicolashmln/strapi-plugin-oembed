@@ -1,19 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { isObject } from "lodash";
+import { useGlobalContext, request } from "@strapi/helper-plugin";
 import {
-  HeaderModal,
-  HeaderModalTitle,
-  Modal,
+  ModalLayout,
   ModalBody,
+  ModalHeader,
   ModalFooter,
-  ModalForm,
-  useGlobalContext,
-  request,
-} from "@strapi/helper-plugin";
+} from "@strapi/design-system/ModalLayout";
 import { FormattedMessage } from "react-intl";
-import { Button } from "@buffetjs/core";
-import { Inputs } from "@buffetjs/custom";
+import { Button } from "@strapi/design-system/Button";
+import { TextInput } from "@strapi/design-system/TextInput";
+import { Box } from "@strapi/design-system/Box";
 import { getTrad, getRequestUrl } from "../../utils";
 import pluginId from "../../pluginId";
 
@@ -78,23 +76,23 @@ const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onToggle={onToggle} style={{ width: "50rem" }}>
-      <HeaderModal>
+    <ModalLayout isOpen={isOpen} onToggle={onToggle} style={{ width: "50rem" }}>
+      <ModalHeader>
         <section>
-          <HeaderModalTitle style={{ textTransform: "none" }}>
+          <Typography fontWeight="bold" textColor="neutral800" as="h2">
             <FormattedMessage id={`${pluginId}.modal.import.title`} />
-          </HeaderModalTitle>
+          </Typography>
         </section>
-      </HeaderModal>
+      </ModalHeader>
       <form>
         <ModalBody>
-          <ModalForm style={{ padding: "0 15px" }}>
-            <Inputs
+          <Box padding={15}>
+            <TextInput
               id="oembed-form-url"
               label={formatMessage({
                 id: getTrad("modal.import.input.label"),
               })}
-              description={formatMessage({
+              hint={formatMessage({
                 id: getTrad("modal.import.input.description"),
               })}
               validations={{
@@ -109,20 +107,20 @@ const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
               type="text"
               value={url}
             />
-          </ModalForm>
+          </Box>
         </ModalBody>
         <ModalFooter>
           <section>
-            <Button onClick={onToggle} color="cancel">
+            <Button onClick={onToggle} variant="tertiary">
               <FormattedMessage id="app.components.Button.cancel" />
             </Button>
-            <Button color="success" isLoading={isLoading} onClick={onSubmit}>
+            <Button variant="default" isLoading={isLoading} onClick={onSubmit}>
               <FormattedMessage id={`${pluginId}.modal.import.button.import`} />
             </Button>
           </section>
         </ModalFooter>
       </form>
-    </Modal>
+    </ModalLayout>
   );
 };
 
