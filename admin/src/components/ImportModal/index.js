@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { isObject } from "lodash";
-import { useGlobalContext, request } from "@strapi/helper-plugin";
 import {
   ModalLayout,
   ModalBody,
   ModalHeader,
   ModalFooter,
 } from "@strapi/design-system/ModalLayout";
-import { FormattedMessage } from "react-intl";
+import { Typography } from "@strapi/design-system/Typography";
 import { Button } from "@strapi/design-system/Button";
 import { TextInput } from "@strapi/design-system/TextInput";
-import { Box } from "@strapi/design-system/Box";
-import { getTrad, getRequestUrl } from "../../utils";
+import { FormattedMessage } from "react-intl";
+import { axiosInstance, getTrad, getRequestUrl } from "../../utils";
 import pluginId from "../../pluginId";
 
-const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
-  const { formatMessage } = useGlobalContext();
+const ImportModal = ({ onClose, onImport, value }) => {
+  const { formatMessage } = useIntl();
   const [isLoading, setIsLoading] = useState(false);
   const [inputError, setInputError] = useState("");
   const [url, setUrl] = useState("");
@@ -28,7 +28,7 @@ const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
 
     try {
       setInputError("");
-      const data = await request(
+      const { data } = await axiosInstance.get(
         getRequestUrl(`fetch?url=${encodeURIComponent(url)}`, {
           method: "GET",
           signal,
@@ -40,7 +40,7 @@ const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
         setInputError(data.error);
       } else {
         onImport(data);
-        onToggle();
+        onClose();
       }
     } catch (error) {
       setInputError(error.message);
@@ -49,23 +49,21 @@ const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
   };
 
   useEffect(() => {
-    if (isOpen) {
-      setUrl(isObject(value) && value.url ? value.url : "");
+    setUrl(isObject(value) && value.url ? value.url : "");
 
-      // Focus on the input
-      setTimeout(() => {
-        const input = document.getElementById("oembed-form-url");
-        if (input) {
-          input.focus();
-        }
-      }, 150);
-    }
+    // Focus on the input
+    setTimeout(() => {
+      const input = document.getElementById("oembed-form-url");
+      if (input) {
+        input.focus();
+      }
+    }, 150);
 
     return () => {
       // Abort the endpoint call if we close the modal
       abortController.abort();
     };
-  }, [isOpen]);
+  }, []);
 
   // Submit when we hit enter on the input
   const keyPress = (e) => {
@@ -76,49 +74,62 @@ const ImportModal = ({ isOpen, onToggle, onImport, value }) => {
   };
 
   return (
-    <ModalLayout isOpen={isOpen} onToggle={onToggle} style={{ width: "50rem" }}>
+    <ModalLayout
+      onClose={onClose}
+      style={{ width: "35rem" }}
+      labelledBy="title"
+    >
       <ModalHeader>
         <section>
-          <Typography fontWeight="bold" textColor="neutral800" as="h2">
+          <Typography
+            fontWeight="bold"
+            textColor="neutral800"
+            as="h2"
+            id="title"
+          >
             <FormattedMessage id={`${pluginId}.modal.import.title`} />
           </Typography>
         </section>
       </ModalHeader>
       <form>
         <ModalBody>
-          <Box padding={15}>
-            <TextInput
-              id="oembed-form-url"
-              label={formatMessage({
-                id: getTrad("modal.import.input.label"),
-              })}
-              hint={formatMessage({
-                id: getTrad("modal.import.input.description"),
-              })}
-              validations={{
-                required: true,
-              }}
-              onChange={({ target: { value } }) => {
-                setUrl(value);
-              }}
-              onKeyDown={keyPress}
-              error={inputError}
-              name="name"
-              type="text"
-              value={url}
-            />
-          </Box>
+          <TextInput
+            id="oembed-form-url"
+            label={formatMessage({
+              id: getTrad("modal.import.input.label"),
+            })}
+            hint={formatMessage({
+              id: getTrad("modal.import.input.description"),
+            })}
+            validations={{
+              required: true,
+            }}
+            onChange={({ target: { value } }) => {
+              setUrl(value);
+            }}
+            onKeyDown={keyPress}
+            error={inputError}
+            name="name"
+            type="text"
+            value={url}
+          />
         </ModalBody>
-        <ModalFooter>
-          <section>
-            <Button onClick={onToggle} variant="tertiary">
+        <ModalFooter
+          startActions={
+            <Button onClick={onClose} variant="tertiary">
               <FormattedMessage id="app.components.Button.cancel" />
             </Button>
-            <Button variant="default" isLoading={isLoading} onClick={onSubmit}>
-              <FormattedMessage id={`${pluginId}.modal.import.button.import`} />
-            </Button>
-          </section>
-        </ModalFooter>
+          }
+          endActions={
+            <>
+              <Button variant="default" loading={isLoading} onClick={onSubmit}>
+                <FormattedMessage
+                  id={`${pluginId}.modal.import.button.import`}
+                />
+              </Button>
+            </>
+          }
+        />
       </form>
     </ModalLayout>
   );
@@ -129,8 +140,7 @@ ImportModal.defaultProps = {
 };
 
 ImportModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onImport: PropTypes.func.isRequired,
   value: PropTypes.object,
 };

@@ -49,6 +49,10 @@ const OEmbedField = ({
     setIsOpen(true);
   };
 
+  const onClose = () => {
+    setIsOpen(false);
+  };
+
   const onImport = (data) => {
     onChange({
       target: {
@@ -106,12 +110,13 @@ const OEmbedField = ({
           style={!isEmpty(description) ? { marginTop: "1.4rem" } : {}}
         />
         <FieldError />
-        {/* <ImportModal
-        isOpen={isOpen}
-        value={draftValue}
-        onToggle={() => setIsOpen(!isOpen)}
-        onImport={onImport}
-      /> */}
+        {isOpen && (
+          <ImportModal
+            onClose={onClose}
+            value={draftValue}
+            onImport={onImport}
+          />
+        )}
       </Stack>
     </Field>
   );
