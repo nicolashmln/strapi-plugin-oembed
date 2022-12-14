@@ -1,18 +1,33 @@
 import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
-import OEmbedField from "./components/OEmbedField";
 
 const name = pluginPkg.strapi.name;
 
 export default {
   register(app) {
-    app.addFields({ type: 'oembed', Component: OEmbedField });
-
     app.registerPlugin({
       id: pluginId,
       name,
     })
+
+    app.customFields.register({
+      name,
+      pluginId,
+      type: 'text',
+      components: {
+        Input: async () => import(/* webpackChunkName: "input-component" */ "./components/OEmbedField"),
+      },
+      intlLabel: {
+        id: 'oembed-label',
+        defaultMessage: "oEmbed"
+      },
+      intlDescription: {
+        id: 'oembed-description',
+        defaultMessage: "Add videos from external sources"
+      }
+    });
+
   },
   bootstrap(app) {},
   async registerTrads({ locales }) {
