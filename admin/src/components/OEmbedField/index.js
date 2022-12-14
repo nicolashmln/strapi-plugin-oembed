@@ -1,26 +1,35 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { isEmpty, isObject } from 'lodash';
-import { Button } from '@buffetjs/core';
-import { Label, InputDescription, InputErrors } from 'strapi-helper-plugin';
-import { FormattedMessage } from 'react-intl';
-import ImportModal from '../ImportModal';
-import pluginId from '../../pluginId';
+import React, { useState, useMemo, useEffect } from "react";
+import PropTypes from "prop-types";
+import { isEmpty, isObject } from "lodash";
+import { Button } from "@strapi/design-system/Button";
+import {
+  Field,
+  FieldLabel,
+  FieldHint,
+  FieldError,
+} from "@strapi/design-system/Field";
+import { Stack } from "@strapi/design-system/Stack";
+import { Typography } from "@strapi/design-system/Typography";
+import { Box } from "@strapi/design-system/Box";
+import { Link } from "@strapi/design-system/Link";
+import { FormattedMessage } from "react-intl";
+import ImportModal from "../ImportModal";
+import pluginId from "../../pluginId";
 
 const OEmbedField = ({
-  inputDescription,
-  errors,
-  label,
+  description,
+  error,
   name,
-  noErrorsDescription,
+  intlLabel,
   onChange,
   value,
+  required,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Parse the value from string to JSON
   const parseValue = (value) => {
-    let parsedValue = null; 
+    let parsedValue = null;
 
     try {
       parsedValue = JSON.parse(value);
@@ -33,18 +42,19 @@ const OEmbedField = ({
 
   useEffect(() => {
     setDraftValue(parseValue(value));
-  }, [value])
+  }, [value]);
 
-  const hasValue = useMemo(() => isObject(draftValue) && draftValue.url ? true : false, [draftValue]);
-
-  let spacer = !isEmpty(inputDescription) ? <div style={{ height: '.4rem' }} /> : <div />;
-
-  if (!noErrorsDescription && !isEmpty(errors)) {
-    spacer = <div />;
-  }
+  const hasValue = useMemo(
+    () => (isObject(draftValue) && draftValue.url ? true : false),
+    [draftValue]
+  );
 
   const openModal = () => {
     setIsOpen(true);
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
   };
 
   const onImport = (data) => {
@@ -57,53 +67,72 @@ const OEmbedField = ({
   };
 
   return (
-    <div>
-      <Label htmlFor={name} message={label} style={{ marginBottom: 10 }} />
-      <div style={{ border: '1px solid #e3e9f3', padding: '15px', borderRadius: '2px'}}>
-        { hasValue && (
-          <p>
-            {draftValue.title && (
-              <>
-                <span style={{fontSize: '1.9rem'}}>{draftValue.title}</span>
-                <br />
-              </>
-            )}
-            <a href={draftValue.url} target="_blank">{draftValue.url}</a>
-          </p>
-        ) }
-        <div>
-          <Button color="primary" onClick={openModal}>
-            { hasValue && (
-              <FormattedMessage id={`${pluginId}.form.button.edit`} />
-            ) }
-            { !hasValue && (
-              <FormattedMessage id={`${pluginId}.form.button.import`} />
-            ) }
-          </Button>
+    <Field
+      name="oembed"
+      error={error}
+      hint={description ? description.defaultMessage : ""}
+    >
+      <Stack size={1}>
+        <FieldLabel>{intlLabel.defaultMessage}</FieldLabel>
+        <div
+          style={{
+            border: "1px solid #dcdce4",
+            padding: "15px",
+            borderRadius: "2px",
+          }}
+        >
           {hasValue && (
-            <Button color="delete" onClick={() => onImport(null)} style={{marginLeft: '15px'}}>
-              <FormattedMessage id={`${pluginId}.form.button.delete`} />
+            <div style={{ marginBottom: "10px" }}>
+              {draftValue.title && (
+                <Box paddingBottom={2}>
+                  <Typography variant="delta">{draftValue.title}</Typography>
+                </Box>
+              )}
+              <Link href={draftValue.url} target="_blank">
+                {draftValue.url}
+              </Link>
+            </div>
+          )}
+          <div style={{ display: "flex" }}>
+            <Button variant="default" onClick={openModal}>
+              {hasValue && (
+                <FormattedMessage id={`${pluginId}.form.button.edit`} />
+              )}
+              {!hasValue && (
+                <FormattedMessage id={`${pluginId}.form.button.import`} />
+              )}
             </Button>
-          ) }
+            {hasValue && (
+              <Button
+                variant="danger"
+                onClick={() => onImport(null)}
+                style={{ marginLeft: "15px" }}
+              >
+                <FormattedMessage id={`${pluginId}.form.button.delete`} />
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
-      <InputDescription
-        message={inputDescription}
-        style={!isEmpty(inputDescription) ? { marginTop: '1.4rem' } : {}}
-      />
-      <InputErrors errors={(!noErrorsDescription && errors) || []} name={name} />
-      {spacer}
-      <ImportModal isOpen={isOpen} value={draftValue} onToggle={() => setIsOpen(!isOpen)} onImport={onImport} />
-    </div>
+        <FieldHint
+          style={!isEmpty(description) ? { marginTop: "1.4rem" } : {}}
+        />
+        <FieldError />
+        {isOpen && (
+          <ImportModal
+            onClose={onClose}
+            value={draftValue}
+            onImport={onImport}
+          />
+        )}
+      </Stack>
+    </Field>
   );
 };
 
 OEmbedField.defaultProps = {
-  errors: [],
-  inputDescription: null,
-  label: '',
-  noErrorsDescription: false,
-  value: '',
+  description: undefined,
+  error: undefined,
+  value: "",
 };
 
 OEmbedField.propTypes = {

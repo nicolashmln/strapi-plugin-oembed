@@ -5,13 +5,13 @@
  *
  */
 
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { NotFound } from 'strapi-helper-plugin';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import { NotFound } from "@strapi/helper-plugin";
 // Utils
-import pluginId from '../../pluginId';
+import pluginId from "../../pluginId";
 // Containers
-import HomePage from '../HomePage';
+import HomePage from "../HomePage";
 
 const App = () => {
   return (

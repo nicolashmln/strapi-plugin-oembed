@@ -1,4 +1,5 @@
-'use strict';
+"use strict";
+const { getService } = require("../utils");
 
 /**
  * media-embed.js controller
@@ -7,14 +8,13 @@
  */
 
 module.exports = {
-
   /**
-   * 
+   *
    *
    * @return {Object}
    */
 
   fetch: async (ctx) => {
-    return await strapi.plugins.oembed.services.oembed.fetch(ctx.request.query.url);
-  }
+    return await getService("oembed").fetch(ctx.request.query.url);
+  },
 };

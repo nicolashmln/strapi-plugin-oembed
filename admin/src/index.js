@@ -1,35 +1,56 @@
 import pluginPkg from '../../package.json';
 import pluginId from './pluginId';
-import App from './containers/App';
-import Initializer from './containers/Initializer';
-import lifecycles from './lifecycles';
-import trads from './translations';
-import OEmbedField from './components/OEmbedField';
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
 
-export default strapi => {
-  const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
+const name = pluginPkg.strapi.name;
 
-  const plugin = {
-    blockerComponent: null,
-    blockerComponentProps: {},
-    description: pluginDescription,
-    icon: pluginPkg.strapi.icon,
-    id: pluginId,
-    initializer: Initializer,
-    injectedComponents: [],
-    isReady: false,
-    isRequired: pluginPkg.strapi.required || false,
-    layout: null,
-    lifecycles,
-    leftMenuLinks: [],
-    leftMenuSections: [],
-    mainComponent: App,
-    name: pluginPkg.strapi.name,
-    preventComponentRendering: false,
-    trads,
-  };
+export default {
+  register(app) {
+    app.registerPlugin({
+      id: pluginId,
+      name,
+    })
 
-  strapi.registerField({ type: 'oembed', Component: OEmbedField });
+    app.customFields.register({
+      name,
+      pluginId,
+      type: 'text',
+      components: {
+        Input: async () => import(/* webpackChunkName: "input-component" */ "./components/OEmbedField"),
+      },
+      intlLabel: {
+        id: 'oembed-label',
+        defaultMessage: "oEmbed"
+      },
+      intlDescription: {
+        id: 'oembed-description',
+        defaultMessage: "Add videos from external sources"
+      }
+    });
 
-  return strapi.registerPlugin(plugin);
-};
+  },
+  bootstrap(app) {},
+  async registerTrads({ locales }) {
+    const importedTrads = await Promise.all(
+      locales.map(locale => {
+        return import(
+          /* webpackChunkName: "oembed-translations-[request]" */ `./translations/${locale}.json`
+        )
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      })
+    );
+
+    return Promise.resolve(importedTrads);
+  }
+}
