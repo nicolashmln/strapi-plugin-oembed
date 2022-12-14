@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-oembed",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud...) in Strapi",
   "strapi": {
     "name": "oembed",
@@ -24,6 +24,10 @@
     "url": "https://nicolashamelin.fr"
   },
   "homepage": "https://github.com/nicolashmln/strapi-plugin-oembed",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolashmln/strapi-plugin-oembed"
+  },
   "keywords": [
     "strapi",
     "plugin",
@@ -35,8 +39,11 @@
     "tiktok",
     "soundcloud"
   ],
+  "peerDependencies": {
+    "@strapi/strapi": "4.x"
+  },
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=8.0.0"
   },
   "license": "MIT"

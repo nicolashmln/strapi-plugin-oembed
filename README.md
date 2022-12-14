@@ -1,6 +1,6 @@
 # Strapi plugin oEmbed
 
-Embed content from third party sites (Youtube, Vimeo, Tiktok, Soundcloud, ...) for https://strapi.io
+Embed content from third party sites (Youtube, Vimeo, Tiktok, Soundcloud, ...) for https://strapi.io v4 (For strapi v3 use v0.4.0)
 
 ![](demo.gif)
 
@@ -40,8 +40,8 @@ e.g
   "attributes": {
     ...
     "oembed": {
-      "type": "oembed",
-      "columnType": "longtext"
+      "type": "customField",
+      "customField": "plugin::oembed.oembed"
     }
     ...
   }
@@ -78,7 +78,7 @@ If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal,
 }
 ```
 
-**Note:** because of how the field API is working at the moment, the data returned from your endpoint will be a string and not a JSON object. You'll just have to parse the data in your front (`JSON.parse(article.oembed)`).
+**Note:** the data returned from your endpoint will be a string and not a JSON object. You'll just have to parse the data in your front (`JSON.parse(article.oembed)`).
 
 ## Supported third party sites
 
@@ -87,8 +87,4 @@ If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal,
 - Tiktok
 - Soundcloud
 
-Feel free to submit a PR with the site you want, you just have to edit this file: `services/oembed.js`.
-
-## TODO
-
-- Save the data in a table when we'll have more control over the field API
+Feel free to submit a PR with the provider you want, you just have to edit this file: `server/services/oembed.js`.
