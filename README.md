@@ -88,3 +88,5 @@ If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal,
 - Soundcloud
 
 Feel free to submit a PR with the provider you want, you just have to edit this file: `server/services/oembed.js`.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0H3N9M)
