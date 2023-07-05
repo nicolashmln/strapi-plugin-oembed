@@ -4,6 +4,6 @@
   "form.button.delete": "Delete",
   "modal.import.title": "Import oEmbed content",
   "modal.import.input.label": "URL",
-  "modal.import.input.description": "Youtube, Vimeo, Tiktok or Soundcloud",
+  "modal.import.input.description": "Youtube, Vimeo, Tiktok, Soundcloud or Spotify",
   "modal.import.button.import": "Import"
 }
