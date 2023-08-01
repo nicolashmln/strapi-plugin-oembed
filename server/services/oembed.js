@@ -11,7 +11,7 @@ const providers = require('./providers');
 
 module.exports = ({ strapi }) => ({
   async fetch(url) {
-    const matchedProvider = resolveProvider(url);
+    const matchedProvider = this.resolveProvider(url);
   
     if (!matchedProvider) {
       return {
