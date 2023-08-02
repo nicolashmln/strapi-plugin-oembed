@@ -1,5 +1,5 @@
-"use strict";
-const axios = require("axios");
+'use strict';
+const axios = require('axios');
 
 /**
  * media-embed.js service
@@ -24,8 +24,8 @@ module.exports = ({ strapi }) => {
           let thumbnail;
 
           switch (matches[3]) {
-            case "youtu.be":
-            case "youtube.com":
+            case 'youtu.be':
+            case 'youtube.com':
               fetchedData = await axios
                 .get(
                   `https://www.youtube.com/oembed?url=${encodeURIComponent(
@@ -34,11 +34,11 @@ module.exports = ({ strapi }) => {
                 )
                 .then((res) => res.data);
               title = fetchedData.title;
-              mime = "video/youtube";
+              mime = 'video/youtube';
               thumbnail = fetchedData.thumbnail_url;
               break;
 
-            case "soundcloud.com":
+            case 'soundcloud.com':
               fetchedData = await axios
                 .get(
                   `https://www.soundcloud.com/oembed?url=${encodeURIComponent(
@@ -47,11 +47,11 @@ module.exports = ({ strapi }) => {
                 )
                 .then((res) => res.data);
               title = fetchedData.title;
-              mime = "audio/soundcloud";
+              mime = 'audio/soundcloud';
               thumbnail = fetchedData.thumbnail_url;
               break;
 
-            case "vimeo.com":
+            case 'vimeo.com':
               fetchedData = await axios
                 .get(
                   `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
@@ -60,11 +60,11 @@ module.exports = ({ strapi }) => {
                 )
                 .then((res) => res.data);
               title = fetchedData.title;
-              mime = "video/vimeo";
+              mime = 'video/vimeo';
               thumbnail = fetchedData.thumbnail_url;
               break;
 
-            case "tiktok.com":
+            case 'tiktok.com':
               fetchedData = await axios
                 .get(
                   `https://www.tiktok.com/oembed?url=${encodeURIComponent(
@@ -73,11 +73,11 @@ module.exports = ({ strapi }) => {
                 )
                 .then((res) => res.data);
               title = fetchedData.title;
-              mime = "video/tiktok";
+              mime = 'video/tiktok';
               thumbnail = fetchedData.thumbnail_url;
               break;
 
-            case "open.spotify.com":
+            case 'open.spotify.com':
               fetchedData = await axios
                 .get(
                   `https://open.spotify.com/oembed?url=${encodeURIComponent(
@@ -86,11 +86,11 @@ module.exports = ({ strapi }) => {
                 )
                 .then((res) => res.data);
               title = fetchedData.title;
-              mime = "audio/spotify";
+              mime = 'audio/spotify';
               thumbnail = fetchedData.thumbnail_url;
               break;
 
-            case "codepen.io":
+            case 'codepen.io':
               fetchedData = await axios
                 .get(
                   `https://codepen.io/api/oembed?format=json&url=${encodeURIComponent(
@@ -99,7 +99,7 @@ module.exports = ({ strapi }) => {
                 )
                 .then((res) => res.data);
               title = fetchedData.title;
-              mime = "application/codepen";
+              mime = 'application/codepen';
               thumbnail = fetchedData.thumbnail_url;
               break;
 
@@ -117,11 +117,11 @@ module.exports = ({ strapi }) => {
         } catch (error) {
           if (error.response.status === 404) {
             data = {
-              error: "This URL can't be found",
+              error: 'This URL can\'t be found',
             };
           } else if (error.response.status === 401) {
             data = {
-              error: "Embedding has been disabled for this media",
+              error: 'Embedding has been disabled for this media',
             };
           } else {
             throw new Error(error);
@@ -129,11 +129,11 @@ module.exports = ({ strapi }) => {
         }
       } else {
         data = {
-          error: "Invalid URL",
+          error: 'Invalid URL',
         };
       }
 
       return data;
-    },
+    }
   };
 };
