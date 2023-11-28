@@ -16,7 +16,8 @@ module.exports = (
     async fetch(url) {
       let data;
 
-      const matches = url.match(/^(https?:\/\/)?(www\.)?(youtu\.be|youtube\.com|soundcloud\.com|vimeo\.com|tiktok\.com|open\.spotify\.com)/i);
+      
+      const matches = url.match(/^(https?:\/\/)?(www\.)?(youtu\.be|youtube\.com|soundcloud\.com|vimeo\.com|tiktok\.com|open\.spotify\.com|twitter\.com)/i);
 
       if (matches) {
         try {
@@ -33,6 +34,13 @@ module.exports = (
               mime = 'video/youtube';
               thumbnail = fetchedData.thumbnail_url;
               break;
+
+            case 'twitter.com':
+               fetchedData = await axios.get(`https://publish.twitter.com/oembed?url=${encodeURIComponent(url)}`).then(res => res.data);
+               title = fetchedData.author_name;
+               mime = 'text/twitter';
+               thumbnail = null; // Twitter oEmbed may not provide a thumbnail
+               break;
             
             case 'soundcloud.com':
               fetchedData = await axios.get(`https://www.soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
