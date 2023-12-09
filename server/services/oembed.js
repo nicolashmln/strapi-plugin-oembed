@@ -36,11 +36,11 @@ module.exports = (
               break;
 
             case 'twitter.com':
-               fetchedData = await axios.get(`https://publish.twitter.com/oembed?url=${encodeURIComponent(url)}`).then(res => res.data);
-               title = fetchedData.author_name;
-               mime = 'text/twitter';
-               thumbnail = null; // Twitter oEmbed may not provide a thumbnail
-               break;
+              fetchedData = await axios.get(`https://publish.twitter.com/oembed?url=${encodeURIComponent(url)}`).then(res => res.data);
+              title = fetchedData.author_name;
+              mime = 'text/twitter';
+              thumbnail = null; // Twitter oEmbed may not provide a thumbnail
+              break;
             
             case 'soundcloud.com':
               fetchedData = await axios.get(`https://www.soundcloud.com/oembed?url=${encodeURIComponent(url)}&format=json`).then(res => res.data);
