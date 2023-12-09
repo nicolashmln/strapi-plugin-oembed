@@ -88,6 +88,7 @@ If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal,
 - Soundcloud
 - Spotify
 - CodePen
+- Twitter
 
 Feel free to submit a PR with the provider you want, you just have to edit this file: `server/services/oembed.js`.
 

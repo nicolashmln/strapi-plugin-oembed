@@ -1,7 +1,7 @@
 {
   "name": "strapi-plugin-oembed",
-  "version": "1.1.0",
-  "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud, Spotify, CodePen...) in Strapi",
+  "version": "1.2.1",
+  "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud, Spotify...) in Strapi",
   "strapi": {
     "name": "oembed",
     "displayName": "oEmbed",
@@ -30,13 +30,14 @@
     "tiktok",
     "soundcloud",
     "spotify",
-    "codepen"
+    "codepen",
+    "twitter"
   ],
   "peerDependencies": {
     "@strapi/strapi": "^4.4.0"
   },
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.19.1 <=20.x.x",
     "npm": ">=8.0.0"
   },
   "license": "MIT"
