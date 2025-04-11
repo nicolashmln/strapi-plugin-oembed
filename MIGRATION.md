@@ -14,3 +14,5 @@ Make sure that you change your component definition.
        "customField": "plugin::oembed.oembed"
      }
 ```
+
+N.B.: the change of structure to a JSON field means that your existing data may not be saved.
