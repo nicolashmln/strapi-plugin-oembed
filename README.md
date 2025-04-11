@@ -36,13 +36,10 @@ To enable thumbnails to display in the admin panel (used by oEmbed previews), ad
 
 ```ts
 export default [
-  "strapi::logger",
-  "strapi::errors",
-  
-  // 👇 Remove this line ...
+  /* 👇 Remove this line */
   "strapi::security",
   
-  // 👇 Replace with this line ...
+  /* 👇 Replace with these lines */
   {
     name: "strapi::security",
     config: {
