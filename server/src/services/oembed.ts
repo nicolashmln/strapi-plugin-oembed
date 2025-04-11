@@ -9,14 +9,15 @@ const service = (/* { strapi }: { strapi: Core.Strapi } */) => ({
         'youtu.be': this.fetchYouTube,
         'youtube.com': this.fetchYouTube,
         'www.youtube.com': this.fetchYouTube,
+        'youtube-nocookie.com': this.fetchYouTube,
+        'www.youtube-nocookie.com': this.fetchYouTube,
         'twitter.com': this.fetchTwitter,
         'www.twitter.com': this.fetchTwitter,
         'soundcloud.com': this.fetchSoundCloud,
         'www.soundcloud.com': this.fetchSoundCloud,
         'vimeo.com': this.fetchVimeo,
         'www.vimeo.com': this.fetchVimeo,
-        'tiktok.com': this.fetchTikTok,
-        'www.tiktok.com': this.fetchTikTok,
+        'vm.tiktok.com': this.fetchTikTok,
         'open.spotify.com': this.fetchSpotify,
         'codepen.io': this.fetchCodePen,
         'www.codepen.io': this.fetchCodePen,
@@ -53,7 +54,7 @@ const service = (/* { strapi }: { strapi: Core.Strapi } */) => ({
   },
 
   fetchYouTube(url: string) {
-    const fetchURL = new URL('https://www.youtube.com/oembed');
+    const fetchURL = new URL('https://www.youtube-nocookie.com/oembed');
     fetchURL.searchParams.append('format', 'json');
     fetchURL.searchParams.append('url', url);
     return fetchURL;

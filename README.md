@@ -28,6 +28,47 @@ yarn add strapi-plugin-oembed
 yarn build
 ```
 
+### ⚠️ Allowing Thumbnails in Strapi Admin
+
+To enable thumbnails to display in the admin panel (used by oEmbed previews), add the following to your Strapi app:
+
+#### `config/middlewares.ts`
+
+```ts
+export default [
+  "strapi::logger",
+  "strapi::errors",
+  
+  // 👇 Remove this line ...
+  "strapi::security",
+  
+  // 👇 Replace with this line ...
+  {
+    name: "strapi::security",
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "img-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            "https://market-assets.strapi.io",
+            "https://i.ytimg.com", // YouTube
+            "https://*.sndcdn.com", // SoundCloud
+            "https://i.vimeocdn.com", // Vimeo
+            "https://*.tiktokcdn.com", // TikTok
+            "https://*.spotifycdn.com", // Spotify
+            "https://shots.codepen.io", // CodePen
+          ],
+        },
+      },
+    },
+  },
+  // ...other middlewares
+];
+```
+
 ## Versions
 
 | Strapi version | strapi-plugin-oembed version |
@@ -50,15 +91,13 @@ e.g
   "attributes": {
     ...
     "oembed": {
-      "type": "json", // <-- Strapi v5, use "string" for older versions
+      "type": "json",
       "customField": "plugin::oembed.oembed"
     }
     ...
   }
 }
 ```
-
-Now you'll have the oembed field when you create a new article.
 
 ## Example response
 

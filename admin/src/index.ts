@@ -5,7 +5,9 @@ export default {
   register(app) {
     app.registerPlugin({
       id: PLUGIN_ID,
-      name: 'oembed',
+      initializer: Initializer,
+      isReady: true,
+      name: "oembed",
     });
 
     app.customFields.register({
@@ -23,13 +25,6 @@ export default {
         id: 'oembed-description',
         defaultMessage: 'Add videos from external sources',
       },
-    });
-
-    app.registerPlugin({
-      id: PLUGIN_ID,
-      initializer: Initializer,
-      isReady: true,
-      name: "oembed",
     });
   },
 
