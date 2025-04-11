@@ -88,7 +88,7 @@ e.g
   "attributes": {
     ...
     "oembed": {
-      "type": "json",
+      "type": "customField",
       "customField": "plugin::oembed.oembed"
     }
     ...
