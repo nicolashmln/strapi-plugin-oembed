@@ -1,4 +1,3 @@
-import pluginPkg from '../../package.json';
 import { PLUGIN_ID } from './pluginId';
 import { Initializer } from './components/Initializer';
 
@@ -6,7 +5,7 @@ export default {
   register(app) {
     app.registerPlugin({
       id: PLUGIN_ID,
-      name,
+      name: 'oembed',
     });
 
     app.customFields.register({
@@ -30,7 +29,7 @@ export default {
       id: PLUGIN_ID,
       initializer: Initializer,
       isReady: true,
-      name: pluginPkg.strapi.name,
+      name: "oembed",
     });
   },
 

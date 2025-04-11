@@ -1,9 +1,7 @@
 {
   "oembed.form.button.import": "Click to import oEmbed content from a URL",
-  "oembed.form.button.edit": "Edit",
   "oembed.modal.import.title": "Import oEmbed content",
   "oembed.modal.import.input.label": "URL",
   "oembed.modal.import.input.description": "YouTube, Vimeo, TikTok, Twitter, SoundCloud, Spotify or CodePen",
-  "oembed.modal.import.button.delete": "Delete",
   "oembed.modal.import.button.import": "Import"
 }
