@@ -1,6 +1,8 @@
 # Strapi plugin oEmbed
 
-Embed content from third party sites (Youtube, Vimeo, Tiktok, Soundcloud, Spotify, CodePen...) for https://strapi.io v4 (For strapi v3 use v0.4.0)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0H3N9M)
+
+Embed content from third party sites (YouTube, Vimeo, TikTok, SoundCloud, Spotify, CodePen, etc.) into [Strapi](https://strapi.io).
 
 ![](demo.gif)
 
@@ -26,6 +28,14 @@ yarn add strapi-plugin-oembed
 yarn build
 ```
 
+## Versions
+
+| Strapi version | strapi-plugin-oembed version |
+| -------------- | ---------------------------- |
+| Version 5      | Version 2.\*                 |
+| Version 4      | Version 1.\*                 |
+| Version 3      | Version 0.\*                 |
+
 ## Setup
 
 Go to your model and add the `oembed` field. For example if you have a content type `Article` it will be in `/api/article/models/article.settings.json` and paste the field in the `attributes` section.
@@ -40,7 +50,7 @@ e.g
   "attributes": {
     ...
     "oembed": {
-      "type": "customField",
+      "type": "json", // <-- Strapi v5, use "string" for older versions
       "customField": "plugin::oembed.oembed"
     }
     ...
@@ -50,17 +60,14 @@ e.g
 
 Now you'll have the oembed field when you create a new article.
 
-## Example of the data fetched
+## Example response
 
 If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal, this data will be stored:
 
 ```json
 {
   "url": "https://www.youtube.com/watch?v=tkiOqSTVGds",
-  "title": "Beautiful New Caledonia",
-  "thumbnail": "https://i.ytimg.com/vi/tkiOqSTVGds/hqdefault.jpg",
-  "mime": "video/youtube",
-  "rawData": {
+  "oembed": {
     "type": "video",
     "thumbnail_url": "https://i.ytimg.com/vi/tkiOqSTVGds/hqdefault.jpg",
     "thumbnail_width": 480,
@@ -78,18 +85,16 @@ If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal,
 }
 ```
 
-**Note:** the data returned from your endpoint will be a string and not a JSON object. You'll just have to parse the data in your front (`JSON.parse(article.oembed)`).
+**Note:** the data returned from your endpoint will be a JSON object.
 
-## Supported third party sites
+## Supported third-parties
 
-- Youtube
+- YouTube
 - Vimeo
-- Tiktok
-- Soundcloud
+- TikTok
+- SoundCloud
 - Spotify
 - CodePen
 - Twitter
 
 Feel free to submit a PR with the provider you want, you just have to edit this file: `server/services/oembed.js`.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0H3N9M)
