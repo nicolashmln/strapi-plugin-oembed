@@ -7,7 +7,7 @@ export default {
       id: PLUGIN_ID,
       initializer: Initializer,
       isReady: true,
-      name: "oembed",
+      name: 'oembed',
     });
 
     app.customFields.register({

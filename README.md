@@ -37,26 +37,26 @@ To enable thumbnails to display in the admin panel (used by oEmbed previews), ad
 ```ts
 export default [
   /* 👇 Remove this line */
-  "strapi::security",
-  
+  'strapi::security',
+
   /* 👇 Replace with these lines */
   {
-    name: "strapi::security",
+    name: 'strapi::security',
     config: {
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "img-src": [
+          'img-src': [
             "'self'",
-            "data:",
-            "blob:",
-            "https://market-assets.strapi.io",
-            "https://i.ytimg.com", // YouTube
-            "https://*.sndcdn.com", // SoundCloud
-            "https://i.vimeocdn.com", // Vimeo
-            "https://*.tiktokcdn.com", // TikTok
-            "https://*.spotifycdn.com", // Spotify
-            "https://shots.codepen.io", // CodePen
+            'data:',
+            'blob:',
+            'https://market-assets.strapi.io',
+            'https://i.ytimg.com', // YouTube
+            'https://*.sndcdn.com', // SoundCloud
+            'https://i.vimeocdn.com', // Vimeo
+            'https://*.tiktokcdn.com', // TikTok
+            'https://*.spotifycdn.com', // Spotify
+            'https://shots.codepen.io', // CodePen
           ],
         },
       },
