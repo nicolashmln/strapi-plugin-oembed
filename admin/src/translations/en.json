@@ -1,9 +1,14 @@
 {
-  "form.button.import": "Import oEmbed content",
-  "form.button.edit": "Edit",
-  "form.button.delete": "Delete",
-  "modal.import.title": "Import oEmbed content",
-  "modal.import.input.label": "URL",
-  "modal.import.input.description": "Youtube, Vimeo, Tiktok, Twitter, Soundcloud, Spotify or CodePen",
-  "modal.import.button.import": "Import"
+  "oembed.custom-field.label": "oEmbed",
+  "oembed.custom-field.description": "Embed content from external sources",
+
+  "oembed.form.button.import": "Click to import oEmbed content from a URL",
+  "oembed.form.button.open": "Open",
+  "oembed.form.button.edit": "Edit",
+  "oembed.form.button.delete": "Delete",
+
+  "oembed.modal.import.title": "Import oEmbed",
+  "oembed.modal.import.input.label": "URL",
+  "oembed.modal.import.input.description": "The URL you would like to retrieve metadata from",
+  "oembed.modal.import.button.import": "Import"
 }
