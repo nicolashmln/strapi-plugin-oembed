@@ -1,24 +1,7 @@
 {
   "name": "strapi-plugin-oembed",
-  "version": "1.2.1",
-  "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud, Spotify...) in Strapi",
-  "strapi": {
-    "name": "oembed",
-    "displayName": "oEmbed",
-    "icon": "globe-asia",
-    "description": "Embed content from third party sites (YouTube, Vimeo, SoundCloud, Spotify, CodePen...) in Strapi",
-    "kind": "plugin"
-  },
-  "dependencies": {},
-  "author": {
-    "name": "Nicolas Hamelin",
-    "url": "https://nicolashamelin.fr"
-  },
-  "homepage": "https://github.com/nicolashmln/strapi-plugin-oembed",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nicolashmln/strapi-plugin-oembed"
-  },
+  "version": "2.0.0",
+  "description": "Embed content from third-party sites in Strapi",
   "keywords": [
     "strapi",
     "plugin",
@@ -33,12 +16,89 @@
     "codepen",
     "twitter"
   ],
+  "homepage": "https://github.com/nicolashmln/strapi-plugin-oembed",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolashmln/strapi-plugin-oembed"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    "./strapi-admin": {
+      "types": "./dist/admin/src/index.d.ts",
+      "source": "./admin/src/index.ts",
+      "import": "./dist/admin/index.mjs",
+      "require": "./dist/admin/index.js",
+      "default": "./dist/admin/index.js"
+    },
+    "./strapi-server": {
+      "types": "./dist/server/src/index.d.ts",
+      "source": "./server/src/index.ts",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "strapi-plugin build",
+    "lint": "eslint .",
+    "prepare": "husky",
+    "test:ts:back": "run -T tsc -p server/tsconfig.json",
+    "test:ts:front": "run -T tsc -p admin/tsconfig.json",
+    "verify": "strapi-plugin verify",
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link"
+  },
+  "dependencies": {
+    "@extractus/oembed-extractor": "^4.0.7",
+    "@strapi/design-system": "^2.0.0-rc.23",
+    "@strapi/icons": "^2.0.0-rc.23",
+    "react-intl": "^7.1.10"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.8",
+    "@eslint/js": "^9.20.0",
+    "@strapi/sdk-plugin": "^5.3.2",
+    "@strapi/strapi": "^5.12.5",
+    "@strapi/typescript-utils": "^5.12.5",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-sonarjs": "^3.0.2",
+    "husky": "^9.1.7",
+    "prettier": "3.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
+    "sort-package-json": "^3.0.0",
+    "styled-components": "^6.1.17",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.29.0"
+  },
   "peerDependencies": {
-    "@strapi/strapi": "^4.4.0"
+    "@strapi/sdk-plugin": "^5.3.2",
+    "@strapi/strapi": "^5.12.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
+    "styled-components": "^6.1.17"
   },
-  "engines": {
-    "node": ">=14.19.1 <=20.x.x",
-    "npm": ">=8.0.0"
-  },
-  "license": "MIT"
+  "strapi": {
+    "kind": "plugin",
+    "name": "oembed",
+    "displayName": "oEmbed",
+    "description": "Embed content from third-party sites in Strapi v5"
+  }
 }

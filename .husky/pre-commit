@@ -1,0 +1,3 @@
+npx prettier --check .
+npm run lint
+npx sort-package-json

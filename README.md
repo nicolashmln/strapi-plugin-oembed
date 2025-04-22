@@ -1,95 +1,102 @@
 # Strapi plugin oEmbed
 
-Embed content from third party sites (Youtube, Vimeo, Tiktok, Soundcloud, Spotify, CodePen...) for https://strapi.io v4 (For strapi v3 use v0.4.0)
+Embed videos, pictures and rich content from hundreds of third-parties in to [Strapi](https://strapi.io) via the admin interface. For more information about oEmbed, check out the article [Enhance your Strapi content with rich media using oEmbed](https://medium.com/@bashaus/enhance-your-strapi-content-with-rich-media-using-oembed-59d0f5047603).
 
-![](demo.gif)
+![Example of the strapi-plugin-oembed plugin](demo.gif)
 
-## How it works
+## Use cases
 
-- Add the field in your model
-- When you create a new content, paste the URL of the third party site in the modal
-- The data is fetched and stored in the content
+- Video: YouTube, Vimeo, TikTok, Twitch, DailyMotion
+- Photo: Imgur, Flickr, DeviantArt, Unsplash, Instagram
+- Rich: Twitter, Pinterest, SlideShare, SoundCloud, CodePen, JSFiddle
+- ... plus [hundreds more providers](https://oembed.com/providers.json).
 
 ## Installation
 
-Using npm
+Ensure the version of this plugin corresponds with the correct version of Strapi that you are using.
+
+| Strapi version | Plugin semver           |
+| -------------- | ----------------------- |
+| Strapi v5      | strapi-plugin-oembed@^2 |
+| Strapi v4      | strapi-plugin-oembed@^1 |
+| Strapi v3      | strapi-plugin-oembed@^0 |
+
+Install the package to your repository:
 
 ```bash
-npm install --save strapi-plugin-oembed
-npm run build
+# npm
+npm install --save strapi-plugin-oembed@^2
+
+# yarn
+yarn add strapi-plugin-oembed@^2
 ```
 
-Using yarn
+Enable the plugin:
 
-```bash
-yarn add strapi-plugin-oembed
-yarn build
+`config/plugins.ts`:
+
+```typescript
+export default () => ({
+  // ...
+  oembed: {
+    enabled: true,
+  },
+});
 ```
 
-## Setup
+## Migration
 
-Go to your model and add the `oembed` field. For example if you have a content type `Article` it will be in `/api/article/models/article.settings.json` and paste the field in the `attributes` section.
+Check the [migration documentation](MIGRATION.md) for important information on
+how to upgrade from Strapi version 4 to Strapi version 5.
 
-e.g
+## Usage
+
+Edit the `content type` model and insert the `oembed` field to the`attributes` section.
+
+`./src/api/[content-type]/content-types/[content-type]/schema.json`
 
 ```json
 {
   "kind": "collectionType",
-  "collectionName": "articles",
-  ...
+  "collectionName": "[content-type]",
+  // ...
   "attributes": {
-    ...
+    // ...
     "oembed": {
       "type": "customField",
       "customField": "plugin::oembed.oembed"
     }
-    ...
+    // ...
   }
 }
 ```
 
-Now you'll have the oembed field when you create a new article.
+## Example response
 
-## Example of the data fetched
-
-If you paste the url `https://www.youtube.com/watch?v=tkiOqSTVGds` in the modal, this data will be stored:
+Assuming the URL: `https://www.youtube.com/watch?v=aqz-KE-bpKQ` is used:
 
 ```json
 {
-  "url": "https://www.youtube.com/watch?v=tkiOqSTVGds",
-  "title": "Beautiful New Caledonia",
-  "thumbnail": "https://i.ytimg.com/vi/tkiOqSTVGds/hqdefault.jpg",
-  "mime": "video/youtube",
-  "rawData": {
+  "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+  "thumbnail": "data:image/jpeg;base64,...truncated...",
+  "oembed": {
+    "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film",
+    "author_name": "Blender",
+    "author_url": "https://www.youtube.com/@BlenderOfficial",
     "type": "video",
-    "thumbnail_url": "https://i.ytimg.com/vi/tkiOqSTVGds/hqdefault.jpg",
-    "thumbnail_width": 480,
-    "html": "<iframe width=\"480\" height=\"270\" src=\"https://www.youtube.com/embed/tkiOqSTVGds?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+    "height": 113,
+    "width": 200,
     "version": "1.0",
-    "width": 480,
-    "author_url": "https://www.youtube.com/user/lilomoino",
     "provider_name": "YouTube",
-    "thumbnail_height": 360,
-    "height": 270,
-    "author_name": "LilO Moino",
     "provider_url": "https://www.youtube.com/",
-    "title": "Beautiful New Caledonia"
+    "thumbnail_height": 360,
+    "thumbnail_width": 480,
+    "thumbnail_url": "https://i.ytimg.com/vi/aqz-KE-bpKQ/hqdefault.jpg",
+    "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/aqz-KE-bpKQ?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film\"></iframe>"
   }
 }
 ```
 
-**Note:** the data returned from your endpoint will be a string and not a JSON object. You'll just have to parse the data in your front (`JSON.parse(article.oembed)`).
-
-## Supported third party sites
-
-- Youtube
-- Vimeo
-- Tiktok
-- Soundcloud
-- Spotify
-- CodePen
-- Twitter
-
-Feel free to submit a PR with the provider you want, you just have to edit this file: `server/services/oembed.js`.
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E0H3N9M)
+- The `url` property is the value you typed.
+- The `thumbnail` is a base64 encoded string of the thumbnail, if there is one
+- The `oembed` contains the raw oembed data.
