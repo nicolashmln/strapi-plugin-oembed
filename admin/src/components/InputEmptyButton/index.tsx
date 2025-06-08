@@ -13,16 +13,16 @@ export type InputEmptyButtonProps = {
 export default function InputEmptyButton({ onImport }: InputEmptyButtonProps) {
   return (
     <CarouselInput label="" nextLabel="" previousLabel="" selectedSlide={0}>
-      <ImportModal entry={null} onImport={onImport}>
-        <CarouselSlide label="" style={{ cursor: 'pointer' }}>
+      <CarouselSlide label="" style={{ cursor: 'pointer' }}>
+        <ImportModal entry={null} onImport={onImport}>
           <Flex direction="column" gap="12px" alignItems="center">
             <PlusCircle aria-hidden width="3.2em" height="3.2em" fill="primary600" />
             <Typography variant="pi" fontWeight="bold" textColor="neutral600">
               <FormattedMessage id={getTranslation('form.button.import')} />
             </Typography>
           </Flex>
-        </CarouselSlide>
-      </ImportModal>
+        </ImportModal>
+      </CarouselSlide>
     </CarouselInput>
   );
 }
