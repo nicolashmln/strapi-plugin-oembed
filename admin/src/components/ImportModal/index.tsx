@@ -1,6 +1,6 @@
 import { Button, Field, Modal } from '@strapi/design-system';
-import { useAuth } from '@strapi/strapi/admin';
-import { FormEventHandler, ReactNode, useEffect, useState } from 'react';
+import { useFetchClient } from '@strapi/strapi/admin';
+import { FormEventHandler, ReactNode, useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Oembed } from '@/shared/types/oembed';
@@ -16,62 +16,48 @@ export type ImportModalProps = {
 };
 
 export default function ImportModal({ onImport, entry, children }: ImportModalProps) {
-  const token = useAuth('', (value) => value.token);
   const [open, setOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [inputError, setInputError] = useState('');
   const [url, setUrl] = useState('');
-  const abortController = new AbortController();
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
+  const { get } = useFetchClient();
 
-    (async () => {
-      setIsLoading(true);
-      const { signal } = abortController;
+  const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+    (event) => {
+      event.preventDefault();
 
-      try {
-        setInputError('');
+      (async () => {
+        setIsLoading(true);
 
-        const response = await fetch(
-          `/${pkgJson.strapi.name}/fetch?url=${encodeURIComponent(url)}`,
-          {
-            method: 'GET',
-            signal,
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
+        try {
+          setInputError('');
+
+          const { data } = await get(
+            `/${pkgJson.strapi.name}/fetch?url=${encodeURIComponent(url)}`
+          );
+
+          if (data.error) {
+            setInputError(data.error);
+          } else {
+            onImport(data);
+            setOpen(false);
           }
-        );
-
-        const data = await response.json();
-
-        setIsLoading(false);
-
-        if (data.error) {
-          setInputError(data.error);
-        } else {
-          onImport(data);
-          setOpen(false);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : 'An error occurred';
+          setInputError(message);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : 'An error occurred';
-        setInputError(message);
-        setIsLoading(false);
-      }
-    })();
-  };
+      })();
+    },
+    [url, get, onImport]
+  );
 
   useEffect(() => {
     setUrl(entry?.url ?? '');
-
-    return () => {
-      // Abort the endpoint call if we close the modal
-      abortController.abort();
-    };
-  }, []);
+  }, [entry?.url]);
 
   return (
     <Modal.Root open={open} onOpenChange={setOpen}>
