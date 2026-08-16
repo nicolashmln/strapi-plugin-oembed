@@ -19,7 +19,7 @@
   "homepage": "https://github.com/nicolashmln/strapi-plugin-oembed",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nicolashmln/strapi-plugin-oembed"
+    "url": "git+https://github.com/nicolashmln/strapi-plugin-oembed.git"
   },
   "license": "MIT",
   "type": "commonjs",
