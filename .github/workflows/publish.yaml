@@ -1,5 +1,5 @@
 ---
-name: Publish
+name: publish
 
 on:
   release:
@@ -12,12 +12,14 @@ jobs:
     permissions:
       contents: read
       id-token: write
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
         with:
-          node-version: '22.x'
-          cache: 'npm'
+          node-version-file: '.nvmrc'
+          cache: npm
           registry-url: 'https://registry.npmjs.org'
 
       - name: install
@@ -26,7 +28,5 @@ jobs:
       - name: build
         run: npm run build
 
-      - name: npm publish
+      - name: publish
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
