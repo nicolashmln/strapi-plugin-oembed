@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-oembed",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Embed content from third-party sites in Strapi",
   "keywords": [
     "strapi",
@@ -78,7 +78,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-sonarjs": "^3.0.2",
     "husky": "^9.1.7",
-    "prettier": "3.5.3",
+    "prettier": "3.9.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.0",

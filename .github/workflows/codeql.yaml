@@ -1,13 +1,11 @@
 ---
-name: CodeQL
+name: codeql
 
 on:
+  pull_request:
   push:
     branches:
-      - '*'
-  pull_request:
-    branches:
-      - '*'
+      - main
 
 jobs:
   analyze:
@@ -18,12 +16,12 @@ jobs:
       security-events: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@v4
         with:
           languages: javascript
 
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4
