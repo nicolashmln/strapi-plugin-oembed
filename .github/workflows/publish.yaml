@@ -28,5 +28,9 @@ jobs:
       - name: build
         run: npm run build
 
+      # Publish to npmjs using a newer version of npm, as
+      # Node.js v22 (required by the Strapi plugin API) ships
+      # with npm 10 and npm 11 is required to use OIDC
+
       - name: publish
-        run: npm publish --access public --provenance
+        run: npx npm@latest publish --access public --provenance
