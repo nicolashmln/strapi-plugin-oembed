@@ -1,4 +1,4 @@
-import { DesignSystemProvider, Field } from '@strapi/design-system';
+import { Field } from '@strapi/design-system';
 
 import { type Oembed } from '@/shared/types/oembed';
 
@@ -33,16 +33,14 @@ export default function Input({ error = undefined, name, label, onChange, value 
   };
 
   return (
-    <DesignSystemProvider>
-      <Field.Root name="oembed" error={error}>
-        <Field.Label>{label}</Field.Label>
+    <Field.Root name="oembed" error={error}>
+      <Field.Label>{label}</Field.Label>
 
-        {!hasValue && <InputEmptyButton onImport={handleImport} />}
-        {hasValue && <InputOembedCard entry={value} onImport={handleImport} />}
+      {!hasValue && <InputEmptyButton onImport={handleImport} />}
+      {hasValue && <InputOembedCard entry={value} onImport={handleImport} />}
 
-        <Field.Hint />
-        <Field.Error />
-      </Field.Root>
-    </DesignSystemProvider>
+      <Field.Hint />
+      <Field.Error />
+    </Field.Root>
   );
 }
