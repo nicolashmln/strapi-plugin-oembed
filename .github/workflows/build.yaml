@@ -18,6 +18,10 @@ jobs:
           node-version-file: '.nvmrc'
           cache: npm
 
+      # Can be removed once moved to Node.js 24+ LTS
+      - name: upgrade
+        run: npm install -g npm@latest
+
       - name: install
         run: npm ci
 
