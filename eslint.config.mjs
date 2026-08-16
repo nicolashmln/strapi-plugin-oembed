@@ -1,7 +1,6 @@
 import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
-import jestPlugin from 'eslint-plugin-jest';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
 import promisePlugin from 'eslint-plugin-promise';
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
@@ -50,20 +49,6 @@ export default tseslint.config(
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 0,
-    },
-  },
-
-  /* eslint-plugin-jest */
-  {
-    files: ['*.spec.{ts,tsx}'],
-    ...jestPlugin.configs['flat/recommended'],
-    rules: {
-      ...jestPlugin.configs['flat/recommended'].rules,
-      /**
-       * The `describe` and `it` functions will commonly use the same values.
-       * Duplicated strings in this case are acceptable.
-       */
-      'sonarjs/no-duplicate-string': 0,
     },
   },
 
