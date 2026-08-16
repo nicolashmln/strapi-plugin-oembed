@@ -55,8 +55,8 @@
   },
   "dependencies": {
     "@extractus/oembed-extractor": "^4.0.7",
-    "@strapi/design-system": "^2.0.0-rc.23",
-    "@strapi/icons": "^2.0.0-rc.23",
+    "@strapi/design-system": "^2",
+    "@strapi/icons": "^2",
     "react-intl": "^7.1.10"
   },
   "devDependencies": {
